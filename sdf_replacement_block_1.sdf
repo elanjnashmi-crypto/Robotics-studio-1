@@ -1,0 +1,235 @@
+    <!-- ================================================================
+         Reusable "burning object" additions (DynamicObject pattern).
+         Applied here to 3 existing forest objects: oak2, oak6, pine4.
+
+         Each object gets:
+           1. a "<name>_fire" model: a simple static flame shape (three
+              stacked spheres, red -> orange -> yellow), hidden 30m below
+              the world until the "burning" state, when it's moved up to
+              sit on top of the real object. No particle system or plugin
+              required: just plain geometry, same set_pose trick as
+              everything else in this file.
+           2. a "<name>_burnt" model: a dark-grey stand-in tree (same
+              cylinder-trunk + sphere-canopy shape as demo_tree_burnt),
+              initially hidden 30m below the world.
+
+         Note on the "burnt" shape: oak2/oak6/pine4 are complex meshes
+         fetched from Fuel (https://fuel.gazebosim.org/...), not simple
+         local geometry, so there is no local material definition to
+         safely edit/grey out in this file. The burnt state instead reuses
+         the same plain grey tree silhouette already proven to work for
+         demo_tree_burnt above, repositioned to each object's own spot.
+         The real object is hidden underneath it, so visually the tree
+         "turns into" this dark grey shape once burnt.
+    ================================================================ -->
+
+    <!-- oak2: original pose 2.99444 -4.95498 -0.3 0 -0 0.8 -->
+    <model name="oak2_fire">
+      <pose>0 0 -30 0 0 0</pose>
+      <static>true</static>
+      <link name="flame">
+        <visual name="flame_base">
+          <pose>0 0 1.6 0 0 0</pose>
+          <geometry><sphere><radius>0.5</radius></sphere></geometry>
+          <material>
+            <ambient>0.9 0.15 0.02 1</ambient>
+            <diffuse>0.9 0.15 0.02 1</diffuse>
+          </material>
+        </visual>
+        <visual name="flame_mid">
+          <pose>0 0 2.1 0 0 0</pose>
+          <geometry><sphere><radius>0.35</radius></sphere></geometry>
+          <material>
+            <ambient>1.0 0.45 0.05 1</ambient>
+            <diffuse>1.0 0.45 0.05 1</diffuse>
+          </material>
+        </visual>
+        <visual name="flame_tip">
+          <pose>0 0 2.5 0 0 0</pose>
+          <geometry><sphere><radius>0.22</radius></sphere></geometry>
+          <material>
+            <ambient>1.0 0.8 0.1 1</ambient>
+            <diffuse>1.0 0.8 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="oak2_burnt">
+      <pose>0 0 -30 0 0 0</pose>
+      <static>true</static>
+      <link name="tree">
+        <collision name="trunk_collision">
+          <pose>0 0 0.75 0 0 0</pose>
+          <geometry>
+            <cylinder><radius>0.18</radius><length>1.5</length></cylinder>
+          </geometry>
+        </collision>
+        <collision name="canopy_collision">
+          <pose>0 0 1.75 0 0 0</pose>
+          <geometry>
+            <sphere><radius>0.75</radius></sphere>
+          </geometry>
+        </collision>
+        <visual name="trunk_visual">
+          <pose>0 0 0.75 0 0 0</pose>
+          <geometry>
+            <cylinder><radius>0.18</radius><length>1.5</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.12 0.12 0.12 1</ambient>
+            <diffuse>0.12 0.12 0.12 1</diffuse>
+          </material>
+        </visual>
+        <visual name="canopy_visual">
+          <pose>0 0 1.75 0 0 0</pose>
+          <geometry>
+            <sphere><radius>0.75</radius></sphere>
+          </geometry>
+          <material>
+            <ambient>0.18 0.18 0.18 1</ambient>
+            <diffuse>0.18 0.18 0.18 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- oak6: original pose -4.33701 1.32854 -0.3 0 -0 0 -->
+    <model name="oak6_fire">
+      <pose>0 0 -30 0 0 0</pose>
+      <static>true</static>
+      <link name="flame">
+        <visual name="flame_base">
+          <pose>0 0 1.6 0 0 0</pose>
+          <geometry><sphere><radius>0.5</radius></sphere></geometry>
+          <material>
+            <ambient>0.9 0.15 0.02 1</ambient>
+            <diffuse>0.9 0.15 0.02 1</diffuse>
+          </material>
+        </visual>
+        <visual name="flame_mid">
+          <pose>0 0 2.1 0 0 0</pose>
+          <geometry><sphere><radius>0.35</radius></sphere></geometry>
+          <material>
+            <ambient>1.0 0.45 0.05 1</ambient>
+            <diffuse>1.0 0.45 0.05 1</diffuse>
+          </material>
+        </visual>
+        <visual name="flame_tip">
+          <pose>0 0 2.5 0 0 0</pose>
+          <geometry><sphere><radius>0.22</radius></sphere></geometry>
+          <material>
+            <ambient>1.0 0.8 0.1 1</ambient>
+            <diffuse>1.0 0.8 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="oak6_burnt">
+      <pose>0 0 -30 0 0 0</pose>
+      <static>true</static>
+      <link name="tree">
+        <collision name="trunk_collision">
+          <pose>0 0 0.75 0 0 0</pose>
+          <geometry>
+            <cylinder><radius>0.18</radius><length>1.5</length></cylinder>
+          </geometry>
+        </collision>
+        <collision name="canopy_collision">
+          <pose>0 0 1.75 0 0 0</pose>
+          <geometry>
+            <sphere><radius>0.75</radius></sphere>
+          </geometry>
+        </collision>
+        <visual name="trunk_visual">
+          <pose>0 0 0.75 0 0 0</pose>
+          <geometry>
+            <cylinder><radius>0.18</radius><length>1.5</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.12 0.12 0.12 1</ambient>
+            <diffuse>0.12 0.12 0.12 1</diffuse>
+          </material>
+        </visual>
+        <visual name="canopy_visual">
+          <pose>0 0 1.75 0 0 0</pose>
+          <geometry>
+            <sphere><radius>0.75</radius></sphere>
+          </geometry>
+          <material>
+            <ambient>0.18 0.18 0.18 1</ambient>
+            <diffuse>0.18 0.18 0.18 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- pine4: original pose 7.08738 1.33612 0 0 -0 0 -->
+    <model name="pine4_fire">
+      <pose>0 0 -30 0 0 0</pose>
+      <static>true</static>
+      <link name="flame">
+        <visual name="flame_base">
+          <pose>0 0 1.9 0 0 0</pose>
+          <geometry><sphere><radius>0.4</radius></sphere></geometry>
+          <material>
+            <ambient>0.9 0.15 0.02 1</ambient>
+            <diffuse>0.9 0.15 0.02 1</diffuse>
+          </material>
+        </visual>
+        <visual name="flame_mid">
+          <pose>0 0 2.4 0 0 0</pose>
+          <geometry><sphere><radius>0.28</radius></sphere></geometry>
+          <material>
+            <ambient>1.0 0.45 0.05 1</ambient>
+            <diffuse>1.0 0.45 0.05 1</diffuse>
+          </material>
+        </visual>
+        <visual name="flame_tip">
+          <pose>0 0 2.8 0 0 0</pose>
+          <geometry><sphere><radius>0.18</radius></sphere></geometry>
+          <material>
+            <ambient>1.0 0.8 0.1 1</ambient>
+            <diffuse>1.0 0.8 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="pine4_burnt">
+      <pose>0 0 -30 0 0 0</pose>
+      <static>true</static>
+      <link name="tree">
+        <collision name="trunk_collision">
+          <pose>0 0 1.0 0 0 0</pose>
+          <geometry>
+            <cylinder><radius>0.15</radius><length>2.0</length></cylinder>
+          </geometry>
+        </collision>
+        <collision name="canopy_collision">
+          <pose>0 0 2.5 0 0 0</pose>
+          <geometry>
+            <sphere><radius>0.6</radius></sphere>
+          </geometry>
+        </collision>
+        <visual name="trunk_visual">
+          <pose>0 0 1.0 0 0 0</pose>
+          <geometry>
+            <cylinder><radius>0.15</radius><length>2.0</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.12 0.12 0.12 1</ambient>
+            <diffuse>0.12 0.12 0.12 1</diffuse>
+          </material>
+        </visual>
+        <visual name="canopy_visual">
+          <pose>0 0 2.5 0 0 0</pose>
+          <geometry>
+            <sphere><radius>0.6</radius></sphere>
+          </geometry>
+          <material>
+            <ambient>0.18 0.18 0.18 1</ambient>
+            <diffuse>0.18 0.18 0.18 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <!-- End reusable burning-object additions -->
